@@ -1,0 +1,639 @@
+
+/* --------------------------
+   Eco-Returns / SaaS shared styles
+   Drop this into src/styles.css for both apps
+   -------------------------- */
+
+/* Design tokens */
+:root{
+  --primary: #2563EB;    /* blue-600 */
+  --accent: #06B6D4;     /* teal-500 */
+  --success: #16A34A;    /* green-600 */
+  --warn: #F59E0B;       /* amber-500 */
+  --danger: #EF4444;     /* red-500 */
+  --bg-surface: #F8FAFC; /* slate-50 */
+  --card: #FFFFFF;
+  --text: #0F172A;       /* slate-900 */
+  --muted: #64748B;      /* slate-500 */
+  --radius-md: 8px;
+  --radius-sm: 6px;
+  --shadow-sm: 0 1px 3px rgba(15,23,42,0.06), 0 1px 2px rgba(15,23,42,0.04);
+  --shadow-md: 0 6px 15px rgba(15,23,42,0.08);
+  --glass: rgba(255,255,255,0.6);
+  --max-width: 1100px;
+  --content-gap: 16px;
+  font-synthesis: none;
+}
+
+/* Basic reset + typography */
+* { box-sizing: border-box; }
+html,body,#root { height:100%; }
+body {
+  margin:0;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  background: var(--bg-surface);
+  color: var(--text);
+  -webkit-font-smoothing:antialiased;
+  line-height:1.45;
+  font-size:16px;
+}
+
+/* layout helpers */
+.app, .container {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+/* Topbar / Nav */
+.topbar, .nav {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap: 12px;
+  padding: 12px 16px;
+  background: var(--card);
+  box-shadow: var(--shadow-sm);
+  border-radius: var(--radius-md);
+  margin: 14px 0;
+}
+.topbar h1, .nav .brand {
+  margin:0;
+  font-size:1.125rem;
+  font-weight:600;
+}
+.topbar .muted, .nav .muted {
+  color: var(--muted);
+  font-size:0.9rem;
+}
+
+/* Grid layout used in ecommerce app */
+main.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  padding: 8px 16px 48px;
+}
+@media (min-width: 900px) {
+  main.grid {
+    grid-template-columns: 2fr 1fr;
+    gap: 20px;
+    align-items: start;
+  }
+  .main-3col { grid-template-columns: 2fr 1fr; }
+}
+
+/* Panels */
+.panel {
+  background: var(--card);
+  padding: 14px;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+}
+.panel h2, .panel h3 {
+  margin: 0 0 12px 0;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+/* Cards / Product list */
+.product-grid {
+  display:grid;
+  grid-template-columns: repeat(1,1fr);
+  gap: 12px;
+}
+@media(min-width:720px){
+  .product-grid { grid-template-columns: repeat(2,1fr); }
+}
+@media(min-width:1100px){
+  .product-grid { grid-template-columns: repeat(3,1fr); }
+}
+.product-card {
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  padding:12px;
+  border-radius: 10px;
+  background: var(--card);
+  box-shadow: var(--shadow-sm);
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+.product-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+}
+.product-card img {
+  width:100%;
+  height:180px;
+  object-fit:contain;
+  background: linear-gradient(180deg,#fff, #f9fafb);
+  border-radius: 6px;
+  margin-bottom: 8px;
+}
+.product-card .title { font-weight:600; font-size:1rem; margin-bottom:4px; }
+.product-card .meta { color:var(--muted); font-size:0.9rem; margin-bottom:8px; }
+.product-card .price { font-weight:700; font-size:1.05rem; }
+
+/* Orders list */
+.orders-list { display:flex; flex-direction:column; gap:8px; }
+.order-item {
+  display:flex; justify-content:space-between; align-items:center;
+  padding:10px; border-radius:8px; background: linear-gradient(180deg,#fff,#fbfdff);
+  border: 1px solid rgba(15,23,42,0.03);
+}
+.order-item .meta { font-size:0.85rem; color:var(--muted); }
+
+/* ReturnForm */
+.form-row { margin-bottom: 10px; }
+label { display:block; font-size:0.95rem; color:var(--muted); margin-bottom:6px; }
+input[type="text"], input[type="number"], select, textarea {
+  width:100%;
+  padding:10px;
+  border:1px solid #e6eef9;
+  border-radius:6px;
+  background: #ffffff;
+  outline: none;
+  transition: box-shadow .12s ease, border-color .12s ease;
+}
+input:focus, select:focus, textarea:focus {
+  box-shadow: 0 0 0 4px rgba(37,99,235,0.08);
+  border-color: var(--primary);
+}
+
+/* Buttons */
+.btn {
+  display:inline-flex; align-items:center; justify-content:center;
+  gap:8px;
+  padding:8px 12px;
+  border-radius:8px;
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  cursor:pointer;
+  font-weight:600;
+  transition: transform .12s ease, opacity .12s ease;
+  box-shadow: 0 2px 6px rgba(37,99,235,0.12);
+}
+.btn:hover { transform: translateY(-1px); opacity:0.98; }
+.btn:active { transform: translateY(0); }
+.btn[disabled] { opacity:0.6; cursor:not-allowed; transform:none; }
+.btn.secondary {
+  background: transparent;
+  color: var(--muted);
+  border: 1px solid rgba(15,23,42,0.06);
+  box-shadow: none;
+}
+.btn.danger { background: var(--danger); color: #fff; box-shadow:none; }
+.btn.success { background: var(--success); color:#fff; }
+
+/* small helper classes */
+.muted { color: var(--muted); font-size:0.9rem; }
+.small { font-size:0.85rem; color:var(--muted); }
+.kv { font-weight:600; color:var(--muted); }
+
+/* Footer */
+.footer {
+  margin-top: 20px;
+  padding: 12px 16px;
+  color: var(--muted);
+  font-size:0.9rem;
+}
+
+/* Admin table styles */
+.admin-table {
+  width:100%;
+  border-collapse: collapse;
+  font-family: inherit;
+  overflow: hidden;
+  border-radius: 10px;
+}
+.admin-table thead tr {
+  background: linear-gradient(180deg,#fbfdff,#f7fbff);
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+.admin-table th, .admin-table td {
+  padding: 12px 10px;
+  text-align: left;
+  border-bottom: 1px solid rgba(15,23,42,0.04);
+  vertical-align: middle;
+}
+.admin-table tbody tr:hover td { background: rgba(6,182,212,0.02); }
+
+/* Confidence bar */
+.conf-bar {
+  height:10px;
+  background: #eef2ff;
+  border-radius: 999px;
+  overflow:hidden;
+}
+.conf-fill {
+  height:100%;
+  background: var(--accent);
+  transition: width .25s ease;
+}
+
+/* Detail modal / drawer */
+.return-detail-backdrop {
+  position:fixed; inset:0; background: rgba(2,6,23,0.45); z-index:60;
+  display:flex; align-items:center; justify-content:center; padding:16px;
+}
+.return-detail {
+  width:100%; max-width:900px; background:var(--card); border-radius:12px;
+  box-shadow: var(--shadow-md); padding:18px; max-height:90vh; overflow:auto;
+}
+.detail-row { display:flex; gap:12px; align-items:center; }
+.detail-row .label { font-weight:600; color:var(--muted); min-width:140px; }
+
+/* Probability bars in detail */
+.prob-grid { display:flex; flex-direction:column; gap:8px; margin-top:8px; }
+.prob-item { display:flex; align-items:center; gap:12px; }
+.prob-name { min-width:90px; text-transform:capitalize; color:var(--muted); font-size:0.95rem; }
+.prob-bar { flex:1; height:10px; background:#f1f5f9; border-radius:999px; overflow:hidden; }
+.prob-fill { height:100%; background:var(--primary); }
+
+/* Small badges */
+.badge {
+  display:inline-block; padding:6px 8px; border-radius:999px; font-weight:600; font-size:0.85rem;
+  background: rgba(15,23,42,0.04); color:var(--muted);
+}
+.badge.success { background: rgba(22,163,74,0.12); color:var(--success); }
+.badge.warn { background: rgba(245,158,11,0.12); color:var(--warn); }
+.badge.danger { background: rgba(239,68,68,0.08); color:var(--danger); }
+
+/* Login / small panels */
+.panel.center { max-width:520px; margin: 20px auto; }
+.auth-note { font-size:0.85rem; color:var(--muted); margin-top:8px; }
+
+/* Responsive tweaks */
+@media (max-width:720px) {
+  .topbar, .nav { flex-direction: column; align-items:flex-start; gap:8px; }
+  .product-card img { height:140px; }
+  .admin-table thead { display:none; }
+  .admin-table tbody tr { display:block; margin-bottom: 10px; border-radius:8px; background:var(--card); padding:10px; }
+  .admin-table td { display:flex; justify-content:space-between; padding:8px 6px; border-bottom:none; }
+}
+
+/* Accessibility focus */
+a:focus, button:focus, input:focus, select:focus {
+  outline: 3px solid rgba(37,99,235,0.18);
+  outline-offset: 2px;
+}
+
+/* Tiny helpers */
+.row { display:flex; gap:12px; align-items:center; }
+.col { display:flex; flex-direction:column; gap:8px; }
+.center { display:flex; align-items:center; justify-content:center; }
+.hidden { display:none !important; }
+
+/* small subtle toast */
+.toast {
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  padding:10px 14px;
+  background: rgba(2,6,23,0.9);
+  color: #fff;
+  border-radius:8px;
+  box-shadow: var(--shadow-md);
+  z-index: 80;
+}
+
+/* small spinner */
+.spinner {
+  width:18px; height:18px; border-radius:50%;
+  border:2px solid rgba(255,255,255,0.15); border-top-color: #fff;
+  animation: spin 1s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* utility spacing classes */
+.mt-1 { margin-top:8px; } .mt-2 { margin-top:12px; } .mb-1 { margin-bottom:8px; }
+
+/* final polish */
+a { color: var(--primary); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* NavBar (plain CSS version for both apps) */
+.er-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 16px;
+  background: var(--card, #ffffff);
+  box-shadow: var(--shadow-sm, 0 1px 3px rgba(15,23,42,0.06));
+  border-radius: var(--radius-md, 8px);
+  margin: 12px 0;
+}
+
+/* left area: brand */
+.er-nav-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.er-brand-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  background: var(--primary, #2563EB);
+  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1.05rem;
+}
+
+.er-brand-title {
+  font-weight: 600;
+  color: var(--text, #0F172A);
+  font-size: 1.05rem;
+}
+.er-brand-sub {
+  font-size: 0.9rem;
+  color: var(--muted, #64748B);
+}
+
+/* right area: actions + user */
+.er-nav-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.er-user-area {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-left: 12px;
+  border-left: 1px solid rgba(15,23,42,0.06);
+}
+
+/* button styles */
+.er-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  background: var(--primary, #2563EB);
+  color: #fff;
+  box-shadow: 0 2px 6px rgba(37,99,235,0.12);
+}
+.er-btn:hover { opacity: 0.95; transform: translateY(-1px); }
+
+.er-btn-outline {
+  background: transparent;
+  color: var(--text, #0F172A);
+  border: 1px solid rgba(15,23,42,0.06);
+  box-shadow: none;
+}
+
+.er-btn-ghost {
+  background: transparent;
+  color: var(--muted, #64748B);
+  border: none;
+  box-shadow: none;
+}
+
+/* small text */
+.er-user-text {
+  color: var(--muted, #64748B);
+  font-size: 0.95rem;
+}
+
+/* responsive tweak */
+@media (max-width: 640px) {
+  .er-nav {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .er-nav-right {
+    width: 100%;
+    justify-content: space-between;
+  }
+}
+/* Additional component CSS (for the components above) */
+
+/* product helpers (already in earlier styles but ensure classes exist) */
+.title { font-weight: 600; margin-bottom: 4px; }
+.meta { color: var(--muted); font-size: 0.95rem; }
+.price { font-weight: 700; }
+
+/* alternate button styles used in components */
+.er-btn-success {
+  background: var(--success, #16A34A);
+  color: #fff;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-weight: 700;
+}
+.er-btn-outline {
+  background: transparent;
+  border: 1px solid rgba(15,23,42,0.06);
+  padding: 8px 12px;
+  border-radius: 8px;
+  color: var(--text);
+}
+.er-btn-ghost {
+  background: transparent;
+  color: var(--muted);
+  border: none;
+  padding: 6px 10px;
+}
+
+/* orders */
+.orders-list .order-item { display:flex; justify-content:space-between; align-items:center; }
+
+/* admin table small tweaks */
+.admin-table thead th { font-weight: 600; color: var(--muted); background: transparent; }
+.admin-table tbody tr td { vertical-align: middle; }
+
+/* conf-bar already exists; ensure conf-fill background */
+.conf-fill { background: var(--accent, #06B6D4); }
+
+/* prob-bar / prob-fill */
+.prob-bar { height: 10px; background: #f1f5f9; border-radius:999px; overflow:hidden; }
+.prob-fill { height:100%; background: var(--primary, #2563EB); transition: width .2s ease; }
+
+/* small responsive tweak for return-detail grid */
+@media (max-width: 720px) {
+  .return-detail { width: 94%; max-width: 720px; padding: 14px; }
+  .return-detail .prob-grid { gap:6px; }
+  .product-grid { grid-template-columns: 1fr; }
+}
+/* =======================================
+   My Returns Panel (Vanilla CSS)
+   ======================================= */
+
+.returns-panel {
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 12px;
+  border: 1px solid #e3e7ec;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.07);
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 20px;
+}
+
+.returns-title {
+  margin: 0 0 16px 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: #1a1f36;
+}
+
+/* Empty state */
+.returns-empty {
+  padding: 40px;
+  text-align: center;
+  color: #7d8592;
+  border: 1px dashed #cdd3dd;
+  border-radius: 10px;
+  background: #fafbfc;
+}
+
+/* List spacing */
+.returns-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* Individual card */
+.return-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  background: #f7f9fc;
+  padding: 14px;
+  border-radius: 10px;
+  border: 1px solid #dfe3ea;
+  transition: 0.2s ease;
+}
+
+.return-card:hover {
+  background: #eef2f7;
+  transform: translateY(-2px);
+}
+
+/* Left content */
+.return-left {
+  flex: 1;
+}
+
+.product-name {
+  font-weight: 600;
+  color: #141a2a;
+  margin-bottom: 4px;
+}
+
+.bold {
+  font-weight: 600;
+}
+
+.order-meta {
+  font-size: 13px;
+  color: #7a8290;
+  margin-bottom: 6px;
+}
+
+.return-reason {
+  font-size: 14px;
+  color: #424b57;
+}
+
+/* Right content */
+.return-right {
+  text-align: right;
+}
+
+.status-text {
+  font-size: 12px;
+  color: #7b8391;
+  margin-top: 3px;
+}
+
+/* =======================================
+   Badge styling (dynamic classes)
+   ======================================= */
+.badge {
+  display: inline-block;
+  padding: 5px 10px;
+  border-radius: 50px;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: capitalize;
+  border: 1px solid transparent;
+}
+
+/* Refund → Green */
+.badge-refund {
+  background: #e9fdf2;
+  color: #0f7a39;
+  border-color: #baf3d0;
+}
+
+/* Replace → Blue */
+.badge-replace {
+  background: #eaf0ff;
+  color: #1d3fa8;
+  border-color: #c9d8ff;
+}
+
+/* Processing → Yellow */
+.badge-processing {
+  background: #fff9e6;
+  color: #8a5600;
+  border-color: #ffe9a3;
+}
+
+.topbar{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:12px 16px;
+  background:#fff;
+  border-bottom:1px solid #e6e6e6;
+}
+.left{display:flex;gap:12px;align-items:center}
+.brand{width:40px;height:40px;background:#2563eb;color:white;border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:700}
+.title{font-weight:700}
+.nav{display:flex;gap:8px}
+.nav button{
+  background:transparent;
+  border:0;
+  padding:8px 10px;
+  cursor:pointer;
+  border-radius:6px;
+  color:#374151;
+  font-weight:500;
+}
+.nav button:hover{background:#f3f4f6}
+.nav button.active{background:#eef2ff;color:#1e40af}
+.right{display:flex;gap:12px;align-items:center}
+/* Login modal overlay */
+.login-overlay{
+  position:fixed;
+  top:0; left:0; right:0; bottom:0;
+  background: rgba(0,0,0,0.45);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  z-index:1200;
+}
+.login-box{
+  width: 360px;
+  max-width: calc(100% - 32px);
+  background: #fff;
+  border-radius: 10px;
+  padding: 18px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+}
+.login-box h3{ margin: 0 0 12px 0; font-size: 18px; }
